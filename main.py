@@ -4,7 +4,7 @@ import classes as cs
 import functions as fcs
 
 
-display = cs.Display((300, 300), 60)
+display = cs.Display((530, 230), 60)
 running = True
 
 objects = {
@@ -26,7 +26,12 @@ def processAngles():
     objects["bottomRing"].setAngle(objects["ROTATIONS"].bottomRing)
     objects["pinionGearTop"].setAngle(objects["ROTATIONS"].pinionRotation)
     objects["pinionGearSide"].setAngle(objects["ROTATIONS"].pinionSpin)
+
+    for object in objects:
+        objects[object].updateRPM()
+
     objects["wheel"].setAngle(objects["ROTATIONS"].pinionRotation)
+    objects["wheel"].copyRPMData(objects["pinionGearSide"])
     wheelRotationSnapped = int((floor(objects["ROTATIONS"].pinionSpin / 10)) * 10)
     objects["wheel"].setNewOriginalImage("QuadCircleTop/"+str(wheelRotationSnapped)+".png")
 
@@ -91,6 +96,9 @@ while running:
 
     for object in objects:
         objects[object].draw(display.surface)
+
+    # print(f"\nTop Ring RPM:        {objects['topRing'].rpm}\nBottom Ring RPM:     {objects['bottomRing'].rpm}\nPinion Rotation RPM: {objects['pinionGearTop'].rpm}\nPinion Spin RPM:     {objects['pinionGearSide'].rpm}")
+    print(f"{objects['ROTATIONS'].getInfo()}\nWheel RPM:       {objects['wheel'].rpm}")
 
     display.updateSurface()
 

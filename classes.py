@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, time
 
 
 class Display:
@@ -67,7 +67,6 @@ class ROTATIONS:
 
         self.checkOverlappingAngles()
         if self.ROUND: self.roundAngles()
-        self.printInfo()
     
     def checkOverlappingAngles(self):
         self.topRing %= self.RING_ROTATION_MAX
@@ -87,14 +86,14 @@ class ROTATIONS:
         self.bottomRing = 0
         self.pinionRotation = 0
         self.pinionSpin = 0
-        
-        self.printInfo()
     
-    def printInfo(self):
+    def getInfo(self):
         os.system("clear")
-        print(f"Top Ring:        {self.topRing}\nBottom Ring:     {self.bottomRing}\nPinion Rotation: {self.pinionRotation}\nPinion Spin:     {self.pinionSpin}")
+        info = (f"Top Ring:        {self.topRing}\nBottom Ring:     {self.bottomRing}\nPinion Rotation: {self.pinionRotation}\nPinion Spin:     {self.pinionSpin}")
+        return info
 
     def draw(self, surface): None
+    def updateRPM(self): None
 
 class RotatableOject:
     def __init__(self, name, imageName, scaledRes, pos):
@@ -105,6 +104,10 @@ class RotatableOject:
         self.pos = pos
         self.angledPos = None
         self.angle = 0
+        # rpm stuff
+        self.lastAngle = 0
+        self.lastTime = time.time()
+        self.rpm = 0
 
         self.processImage()
     
@@ -130,6 +133,21 @@ class RotatableOject:
     def setAngle(self, newAngle):
         self.angle = newAngle
         self.processImage()
+    
+    def updateRPM(self):
+        currTime = time.time()
+        deltaTime = currTime - self.lastTime
+        self.lastTime = currTime
+        # deltaTime = 0.00000001 if deltaTime == 0 else deltaTime
+
+        deltaAngle = self.angle - self.lastAngle
+        self.lastAngle = self.angle
+        self.rpm = deltaAngle / deltaTime
+    
+    def copyRPMData(self, referenceObject):
+        self.lastAngle = referenceObject.lastAngle
+        self.lastTime = referenceObject.lastTime
+        self.rpm = referenceObject.rpm
     
     def draw(self, surface):
         self.processImage()
