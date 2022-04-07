@@ -1,6 +1,7 @@
 import math
 
 
+# y = sin ((1.57/1) * x)
 def xToY_SinWave(x, roundDecial=3):
     y = math.sin((1.57/1)*x)
     return round(y, roundDecial)

@@ -88,9 +88,7 @@ class ROTATIONS:
         self.pinionSpin = 0
     
     def getInfo(self):
-        os.system("clear")
-        info = (f"Top Ring:        {self.topRing}\nBottom Ring:     {self.bottomRing}\nPinion Rotation: {self.pinionRotation}\nPinion Spin:     {self.pinionSpin}")
-        return info
+        return (f"Top Ring:        {self.topRing}\nBottom Ring:     {self.bottomRing}\nPinion Rotation: {self.pinionRotation}\nPinion Spin:     {self.pinionSpin}")
 
     def draw(self, surface): None
     def updateRPM(self): None

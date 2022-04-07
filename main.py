@@ -1,7 +1,6 @@
 from math import floor
 import pygame, os
 import classes as cs
-import functions as fcs
 
 
 display = cs.Display((530, 230), 60)
@@ -98,7 +97,8 @@ while running:
         objects[object].draw(display.surface)
 
     # print(f"\nTop Ring RPM:        {objects['topRing'].rpm}\nBottom Ring RPM:     {objects['bottomRing'].rpm}\nPinion Rotation RPM: {objects['pinionGearTop'].rpm}\nPinion Spin RPM:     {objects['pinionGearSide'].rpm}")
-    print(f"{objects['ROTATIONS'].getInfo()}\nWheel RPM:       {objects['wheel'].rpm}")
+    os.system("clear")
+    print(f"{objects['ROTATIONS'].getInfo()}\nWheel RPM:       {round(objects['wheel'].rpm, 1)}")
 
     display.updateSurface()
 
